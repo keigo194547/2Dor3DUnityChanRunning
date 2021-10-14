@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitychanController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     CharacterController controller;
     Vector3 movedir = Vector3.zero;

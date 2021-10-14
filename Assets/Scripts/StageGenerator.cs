@@ -2,73 +2,74 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageGenerator : MonoBehaviour
+public class StageGenerator: MonoBehaviour
 {
 
-    const int StageTipSize = 30;
-    int currentTipIndex;
+    int StageSize = 30;
+    int StageIndex;
 
     public Transform Target;//Unitychan
-
-    public GameObject[] stagenum;//ステージのプレハブ
+    public GameObject[] stageTips;//ステージのプレハブ
     public int FirstStageIndex;//スタート時にどのインデックスからステージを生成するのか
-    public int preStage; //事前に生成しておくステージ
+    public int aheadStage; //事前に生成しておくステージ
     public List<GameObject> StageList = new List<GameObject>();//生成したステージのリスト
-
 
     // Start is called before the first frame update
     void Start()
     {
-        currentTipIndex = FirstStageIndex -1;
-        StageManeger(preStage);
-
+        StageIndex = FirstStageIndex - 1;
+        StageManager(aheadStage);
     }
 
     // Update is called once per frame
     void Update()
     {
-        int targetPosIndex = (int)(Target.position.z / StageTipSize);
+        int targetPosIndex = (int)(Target.position.z / StageSize);
 
-        if (targetPosIndex + preStage > currentTipIndex)
+        if (targetPosIndex + aheadStage > StageIndex)
         {
-            StageManeger(targetPosIndex + preStage);
-
+            StageManager(targetPosIndex + aheadStage);
         }
     }
 
 
-    void StageManeger(int maps)
+    void StageManager(int toTipIndex)
     {
-        if (maps <= currentTipIndex) return;
+        if (toTipIndex <= StageIndex) return;
+        
 
-        for(int i = currentTipIndex+1; i <= maps;i++)
+        for (int i = StageIndex + 1; i < toTipIndex+1; i++)//指定したステージまで作成する
         {
-            GameObject stageObject = MakeStage(i);
-            StageList.Add(stageObject);
+            GameObject stage = MakeStage(i);
+            StageList.Add(stage);
         }
 
-        while (StageList.Count > preStage + 1)//古いステージを削除する
+        while (StageList.Count > aheadStage + 3)//古いステージを削除する
         {
             DestroyStage();
         }
 
+        StageIndex = toTipIndex;
     }
 
-
-    GameObject MakeStage(int index)
+    GameObject MakeStage(int index)//ステージを生成する
     {
-        int nextStage = Random.Range(0, stagenum.Length);
+        int nextStage = Random.Range(0, stageTips.Length);
 
-        GameObject makeStageObj = (GameObject)Instantiate(
-            stagenum[nextStage], new Vector3(0, 0, index * StageTipSize), Quaternion.identity);
-        return makeStageObj;
+        GameObject stageObject = (GameObject)Instantiate(
+            stageTips[nextStage],
+            new Vector3(0, 0, index * StageSize),
+            Quaternion.identity);
+
+        return stageObject;
     }
 
+    
     void DestroyStage()
     {
+        Debug.Log($"Stage count:{ StageList.Count}");
         GameObject oldStage = StageList[0];
         StageList.RemoveAt(0);
         Destroy(oldStage);
     }
-
 }
