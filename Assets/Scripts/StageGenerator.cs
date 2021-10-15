@@ -8,6 +8,9 @@ public class StageGenerator: MonoBehaviour
     int StageSize = 30;
     int StageIndex;
 
+    public int numberOfStages;
+    private Queue<GameObject> stageQueue = new Queue<GameObject>();
+
     public Transform Target;//Unitychan
     public GameObject[] stageTips;//ステージのプレハブ
     public int FirstStageIndex;//スタート時にどのインデックスからステージを生成するのか
@@ -17,8 +20,11 @@ public class StageGenerator: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StageIndex = FirstStageIndex - 1;
-        StageManager(aheadStage);
+        for (int i = 0; i < numberOfStages; i++)
+        {
+            stageQueue.Enqueue(MakeStage(StageIndex));
+            StageIndex++;
+        }
     }
 
     // Update is called once per frame
@@ -28,29 +34,21 @@ public class StageGenerator: MonoBehaviour
 
         if (targetPosIndex + aheadStage > StageIndex)
         {
-            StageManager(targetPosIndex + aheadStage);
+            
+            NextStage();
         }
-    }
-
-
-    void StageManager(int toTipIndex)
-    {
-        if (toTipIndex <= StageIndex) return;
         
-
-        for (int i = StageIndex + 1; i < toTipIndex+1; i++)//指定したステージまで作成する
-        {
-            GameObject stage = MakeStage(i);
-            StageList.Add(stage);
-        }
-
-        while (StageList.Count > aheadStage + 3)//古いステージを削除する
-        {
-            DestroyStage();
-        }
-
-        StageIndex = toTipIndex;
     }
+
+    void NextStage() //次のステージに行くときに呼び出す。
+    {
+        GameObject previousStage = stageQueue.Dequeue();
+        Destroy(previousStage);
+
+        stageQueue.Enqueue(MakeStage(StageIndex));
+        StageIndex++;
+    }
+
 
     GameObject MakeStage(int index)//ステージを生成する
     {
@@ -64,12 +62,4 @@ public class StageGenerator: MonoBehaviour
         return stageObject;
     }
 
-    
-    void DestroyStage()
-    {
-        Debug.Log($"Stage count:{ StageList.Count}");
-        GameObject oldStage = StageList[0];
-        StageList.RemoveAt(0);
-        Destroy(oldStage);
-    }
 }
