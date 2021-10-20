@@ -12,26 +12,48 @@ public class PlayerController : MonoBehaviour
     public float speedZ;
     public float acceleratorZ;
 
+    private const string isRun = "isRunning";
+    private const string isJump = "isJumping";
+
+
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (Input.GetKeyDown("space"))
-        {
-            if (controller.isGrounded)
+
+
+        if (controller.isGrounded) {
+            if (Input.GetKeyDown("space"))
             {
-                movedir.y = 10f;
+
+                if (controller.isGrounded)
+                {
+                    movedir.y = 10f;
+                }
+            }
+            else
+            {
+                animator.SetBool(isJump, false);
             }
         }
+        
 
         movedir.z = Mathf.Clamp(movedir.z + (acceleratorZ * Time.deltaTime), 0, speedZ);
 
+        if (movedir.z >= 0.1)
+        {
+            animator.SetBool(isRun, true);
+        }
 
 
         movedir.y -= 20f * Time.deltaTime;
