@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 1170586607}
   - component: {fileID: 1170586606}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: EnemyGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,7 +562,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 642457907}
+  MakeEnemyObject: {fileID: 1170586605}
   dictance: {x: 0, y: 0, z: 0}
+  EnemyObject:
+  - {fileID: 1413697402428792778, guid: 6e310444d7fe648a3a671a2a912ee628, type: 3}
+  - {fileID: 7881690460897585301, guid: 7ce4e8ed61a184490842a4b2f3a30a72, type: 3}
+  - {fileID: 2909177667009756403, guid: 3ec43424c7e214bdeaddf9b9d384d15e, type: 3}
+  - {fileID: 8852226673186957414, guid: 5b2b93e06cf0b499a91469f419751f71, type: 3}
+  - {fileID: 8362806830406500207, guid: 7f9ef005092154350b51b52a185dc74f, type: 3}
+  EnemyTime: 3
+  playercontroller: {fileID: 642457909}
 --- !u!65 &1170586607
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -631,7 +640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170586605}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 7.26}
+  m_LocalPosition: {x: 0, y: 1, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
