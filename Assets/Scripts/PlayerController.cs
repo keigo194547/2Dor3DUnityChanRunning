@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     CharacterController controller;
     private Vector3 movedir = Vector3.zero;
 
+
     // Playerの移動値を入れる変数
     public float speedX;
     public float speedZ;
@@ -41,7 +42,15 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool(isJump, false);
             }
+        }else if (!controller.isGrounded)
+        {
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                movedir.y = -10f;
+            }
         }
+
+
         
 
         movedir.z = Mathf.Clamp(movedir.z + (acceleratorZ * Time.deltaTime), 0, speedZ);
@@ -66,16 +75,22 @@ public class PlayerController : MonoBehaviour
         Debug.Log(movedir.z);
     }
 
+  
+
     public Vector3 MoveValue()
     {
         return movedir;
     }
 
+
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(hit.gameObject.tag == "Enemy")
-        { 
+        if (hit.gameObject.tag == "Enemy")
+        {
             Destroy(hit.gameObject);
         }
     }
+
+
 }
