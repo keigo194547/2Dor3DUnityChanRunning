@@ -25,7 +25,7 @@ public class MakeEnemy : MonoBehaviour
         //　プレイヤーとの距離
         dictance = Player.transform.position - this.transform.position;
         EnemyTime = 3.0f;
-        
+
     }
 
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class MakeEnemy : MonoBehaviour
 
         // Plyerとの距離を計算し、一定距離保つ
         this.transform.position = Vector3.Lerp(transform.position, Player.transform.position - dictance, Time.deltaTime * 5);
-        
+
 
         // 敵の射出とその時間
         if (EnemyTime <= 0.0f)
