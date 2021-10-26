@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     CharacterController controller;
     private Vector3 movedir = Vector3.zero;
+    private int accele = 1;
 
 
     // Playerの移動値を入れる変数
@@ -28,7 +29,9 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
+      
+
 
         if (controller.isGrounded) {
             if (Input.GetKeyDown("space"))
@@ -54,7 +57,7 @@ public class PlayerController : MonoBehaviour
         
 
         movedir.z = Mathf.Clamp(movedir.z + (acceleratorZ * Time.deltaTime), 0, speedZ);
-        Debug.Log(movedir.z);
+        //Debug.Log(movedir.z);
 
         if (movedir.z >= 0.1)
         {
@@ -65,14 +68,16 @@ public class PlayerController : MonoBehaviour
         movedir.y -= 20f * Time.deltaTime;
 
         Vector3 globaldir = transform.TransformDirection(movedir);
-        controller.Move(globaldir * Time.deltaTime);
+        controller.Move(globaldir * Time.deltaTime * accele);
+
+        
 
         if (controller.isGrounded)
         {
             movedir.y = 0;
         }
 
-        Debug.Log(movedir.z);
+
     }
 
   
