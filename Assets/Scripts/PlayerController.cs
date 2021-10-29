@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private int accele = 1;
 
 
+
     // Playerの移動値を入れる変数
     public float speedX;
     public float speedZ;
@@ -19,11 +20,20 @@ public class PlayerController : MonoBehaviour
     private const string isJump = "isJumping";
     Animator animator;
 
+    // 様々なSE
+    public AudioClip JumpAudio_Clip;
+    public AudioClip DownAudio_Clip;
+    AudioSource JumpAudio;
+    AudioSource DownAudio;
+
+
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        JumpAudio = GetComponent<AudioSource>();
+        DownAudio = GetComponent<AudioSource>();
         
     }
 
@@ -39,6 +49,7 @@ public class PlayerController : MonoBehaviour
                 if (controller.isGrounded)
                 {
                     movedir.y = 10f;
+                    JumpAudio.PlayOneShot(JumpAudio_Clip);
                 }
             }
             else
@@ -50,6 +61,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 movedir.y = -10f;
+                DownAudio.PlayOneShot(DownAudio_Clip);
             }
         }
 
