@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public float speedZ;
     public float acceleratorZ;
 
+    private Vector3 knockbackVelocity = Vector3.zero;
+
+
     // アニメーション
     private const string isRun = "isRunning";
     private const string isJump = "isJumping";
@@ -23,8 +26,10 @@ public class PlayerController : MonoBehaviour
     // 様々なSE
     public AudioClip JumpAudio_Clip;
     public AudioClip DownAudio_Clip;
+    public AudioClip EnemyClash_Clip;
     AudioSource JumpAudio;
     AudioSource DownAudio;
+    AudioSource EnemyClash;
 
 
     // Start is called before the first frame update
@@ -34,15 +39,13 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         JumpAudio = GetComponent<AudioSource>();
         DownAudio = GetComponent<AudioSource>();
+        EnemyClash = GetComponent<AudioSource>();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-      
-
-
         if (controller.isGrounded) {
             if (Input.GetKeyDown("space"))
             {
@@ -83,10 +86,15 @@ public class PlayerController : MonoBehaviour
         controller.Move(globaldir * Time.deltaTime * accele);
 
         
-
         if (controller.isGrounded)
         {
             movedir.y = 0;
+        }
+
+        if (knockbackVelocity != Vector3.zero)
+        {
+            var characterController = GetComponent<CharacterController>();
+            characterController.Move(knockbackVelocity * Time.deltaTime);
         }
 
 
@@ -105,9 +113,13 @@ public class PlayerController : MonoBehaviour
     {
         if (hit.gameObject.tag == "Enemy")
         {
+            EnemyClash.PlayOneShot(EnemyClash_Clip);
             Destroy(hit.gameObject);
+
         }
+        
     }
+
 
 
 }
