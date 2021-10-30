@@ -1,10 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    // character情報
     CharacterController controller;
+
+    // characterのHP
+    [SerializeField]
+    private int hp = 3;
+    [SerializeField]
+    private int damage = 1;
+    public LifePanel lifePanel;
+
+
     private Vector3 movedir = Vector3.zero;
     private int accele = 1;
 
@@ -40,7 +51,9 @@ public class PlayerController : MonoBehaviour
         JumpAudio = GetComponent<AudioSource>();
         DownAudio = GetComponent<AudioSource>();
         EnemyClash = GetComponent<AudioSource>();
-        
+
+        lifePanel.SetLifeGauge(hp);
+
     }
 
     // Update is called once per frame
@@ -91,12 +104,7 @@ public class PlayerController : MonoBehaviour
             movedir.y = 0;
         }
 
-        if (knockbackVelocity != Vector3.zero)
-        {
-            var characterController = GetComponent<CharacterController>();
-            characterController.Move(knockbackVelocity * Time.deltaTime);
-        }
-
+        Debug.Log("子要素の数 > " + GameObject.Find("Panel").transform.childCount);
 
     }
 
@@ -116,7 +124,11 @@ public class PlayerController : MonoBehaviour
             EnemyClash.PlayOneShot(EnemyClash_Clip);
             Destroy(hit.gameObject);
 
+            hp -= 1;
+            lifePanel.SetLifeGaugeDamage(damage);
         }
+
+        if (hp == 0) Debug.Log("HPが0になったよ");
         
     }
 
