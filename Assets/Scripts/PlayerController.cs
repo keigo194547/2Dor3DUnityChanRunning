@@ -1,10 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    // character情報
     CharacterController controller;
+
+    // characterのHP
+    [SerializeField]
+    private int hp = 3;
+    public LifePanel lifePanel;
+
     private Vector3 movedir = Vector3.zero;
     private int accele = 1;
 
@@ -97,6 +105,7 @@ public class PlayerController : MonoBehaviour
             characterController.Move(knockbackVelocity * Time.deltaTime);
         }
 
+        
 
     }
 
@@ -116,7 +125,11 @@ public class PlayerController : MonoBehaviour
             EnemyClash.PlayOneShot(EnemyClash_Clip);
             Destroy(hit.gameObject);
 
+            hp -= 1;
+            lifePanel.SetLifeGauge(hp);
         }
+
+        if (hp == 0) Debug.Log("HPが0になったよ");
         
     }
 
