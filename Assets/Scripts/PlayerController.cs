@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -106,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("子要素の数 > " + GameObject.Find("Panel").transform.childCount);
 
+      
+
     }
 
   
@@ -128,7 +131,12 @@ public class PlayerController : MonoBehaviour
             lifePanel.SetLifeGaugeDamage(damage);
         }
 
-        if (hp == 0) Debug.Log("HPが0になったよ");
+        if (hp == 0) {
+            SceneManager.LoadScene("GameOverScene");
+            Debug.Log("HPが0になったよ");
+        } 
+
+        
         
     }
 
