@@ -423,8 +423,8 @@ MonoBehaviour:
   damage: 1
   lifePanel: {fileID: 381903455}
   speedX: 15
-  speedZ: 5
-  acceleratorZ: 5
+  speedZ: 6
+  acceleratorZ: 2
   JumpAudio_Clip: {fileID: 8300000, guid: c9dd339bf8818445780ed74cd31c4269, type: 3}
   DownAudio_Clip: {fileID: 8300000, guid: 02da5f6c1ed66401ea899ac6ecdb2505, type: 3}
   EnemyClash_Clip: {fileID: 8300000, guid: a212645964a0142be98fd268ea615fc5, type: 3}
@@ -782,7 +782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400264, guid: dd6ec75974b69a3409711f8110698bbb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.3
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 400264, guid: dd6ec75974b69a3409711f8110698bbb, type: 3}
       propertyPath: m_LocalRotation.x
