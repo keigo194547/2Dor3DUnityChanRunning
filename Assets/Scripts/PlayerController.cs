@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
                     movedir.y = 10f;
                     JumpAudio.PlayOneShot(JumpAudio_Clip);
                     animator.SetBool(isJump, true);
+                    
                 }
             }
             else
