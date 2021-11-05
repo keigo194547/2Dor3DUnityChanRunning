@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
             {
                 movedir.y = -10f;
                 DownAudio.PlayOneShot(DownAudio_Clip);
+                
             }
         }
 
